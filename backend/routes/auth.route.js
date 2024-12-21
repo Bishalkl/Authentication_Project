@@ -1,8 +1,4 @@
 import express from "express";
-
-import path from "path";
-console.log(path.resolve("../controllers/auth.controller.js"));
-
 import {
   signup,
   login,
