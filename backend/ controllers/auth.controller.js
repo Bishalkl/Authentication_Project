@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcryptjs.hash(password, 10);
     // 123456 => unreadable incrypt
 
-    const verficationToken = crypto.randomBytes(3).toString("hex");
+    const verificationToken = crypto.randomBytes(3).toString("hex");
 
     const user = new User({
       email,
