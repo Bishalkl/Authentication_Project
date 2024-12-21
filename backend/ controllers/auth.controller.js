@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
+import crypto from "crypto";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js";
 
@@ -20,9 +21,7 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcryptjs.hash(password, 10);
     // 123456 => unreadable incrypt
 
-    const verificationToken = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
+    const verificationToken = crypto.randomBytes(3).toString("hex");
 
     const user = new User({
       email,
@@ -43,7 +42,7 @@ export const signup = async (req, res) => {
       success: true,
       message: "User created successfully",
       user: {
-        ...user.toObject(),
+        ...user._doc,
         password: undefined,
       },
     });
